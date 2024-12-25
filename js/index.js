@@ -62,29 +62,38 @@ document.addEventListener("DOMContentLoaded", function () {
         resizeCanvas(); // Initial setup
 
 
-const offset =  {
-x:myCanvas.width/2,
-y:myCanvas.height/2,
-}
-
-ctx.translate(offset.x,offset.y);
-
-
-
+        const offset = {
+            x: myCanvas.width / 2,
+            y: myCanvas.height / 2,
+        }
+        ctx.translate(offset.x, offset.y);
 
 
         const A = { x: 0, y: 0 }
         const B = { x: 90, y: 120 }
         const C = { x: B.x, y: 0 }
 
-        function drawPoint(location, size = 40, color = "red") {
-
+        function drawPoint(location, size = 60, color = "red") {
             ctx.beginPath();
             ctx.fillStyle = color;
             ctx.arc(location.x, location.y, size / 2, 0, Math.PI * 2);
             ctx.fill();
-
         }
+
+        function drawCoordinateSystem(ctx, offset) {
+            ctx.beginPath();
+            ctx.moveTo(-offset.x, 0);
+            ctx.lineTo(ctx.canvas.width - offset.x, 0);
+            ctx.moveTo(0, -offset.y);
+            ctx.lineTo(0, ctx.canvas.height - offset.y);
+            ctx.strokeStyle = 'red';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+        }
+        drawCoordinateSystem(ctx, offset);
+
+
+
 
         drawPoint(A);
         drawText("A", A);
@@ -98,7 +107,7 @@ ctx.translate(offset.x,offset.y);
             ctx.fillStyle = color;
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
-            ctx.font = "bold 30px bold";
+            ctx.font = "bold 50px tall";
             ctx.fillText(text, location.x, location.y);
 
 
