@@ -35,96 +35,76 @@ document.addEventListener("DOMContentLoaded", function () {
     const myCanvas = document.getElementById('myCanvas');
     const ctx = myCanvas.getContext("2d");
 
-    // const offset = {
-
-    //     x: myCanvas.width / 2,
-    //     y: myCanvas.height / 2,
-
-    // }
-
-    // ctx.translate(offset.x, offset.y);
-
     const tallFont = new FontFace('bold', 'url("../fonts/FiraSans-Black.ttf")');
-
     tallFont.load().then(function (loadedFont) {
-        // Add the font to the document
         document.fonts.add(loadedFont);
+    });
+    function resizeCanvas() {
+        const canvasWidth = myCanvas.offsetWidth; // Get pixel width
+        myCanvas.width = canvasWidth;
+        myCanvas.height = canvasWidth * 1; // Maintain aspect ratio (50/80) 
+    }
 
-        function resizeCanvas() {
-            const canvasWidth = myCanvas.offsetWidth; // Get pixel width
-            myCanvas.width = canvasWidth;
-            myCanvas.height = canvasWidth * 1; // Maintain aspect ratio (50/80) 
+    resizeCanvas(); // Initial setup
 
-            // Redraw canvas content here
-        }
+    const offset = {
+        x: myCanvas.width / 2,
+        y: myCanvas.height / 2,
+    }
+    ctx.translate(offset.x, offset.y);
 
-        // window.addEventListener('resize', resizeCanvas);
-        resizeCanvas(); // Initial setup
+    const A = { x: 0, y: 0 }
+    const B = { x: 90, y: 120 }
+    const C = { x: B.x, y: 0 }
 
+    //_ ████████████████████████████████████  DRAW FUNCTIONS 
 
-        const offset = {
-            x: myCanvas.width / 2,
-            y: myCanvas.height / 2,
-        }
-        ctx.translate(offset.x, offset.y);
+    function drawPoint(location, size = 60, color = "red") {
+        ctx.beginPath();
+        ctx.fillStyle = color;
+        ctx.arc(location.x, location.y, size / 2, 0, Math.PI * 2);
+        ctx.fill();
+    }
 
+    function drawCoordinateSystem(ctx, offset) {
+        ctx.beginPath();
+        ctx.moveTo(-offset.x, 0);
+        ctx.lineTo(ctx.canvas.width - offset.x, 0);
+        ctx.moveTo(0, -offset.y);
+        ctx.lineTo(0, ctx.canvas.height - offset.y);
+        ctx.strokeStyle = 'red';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+    }
 
-        const A = { x: 0, y: 0 }
-        const B = { x: 90, y: 120 }
-        const C = { x: B.x, y: 0 }
+    function drawText(text, location, color = "white") {
+        ctx.beginPath();
+        ctx.fillStyle = color;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.font = "bold 50px tall";
+        ctx.fillText(text, location.x, location.y);
+    }
 
-        function drawPoint(location, size = 60, color = "red") {
-            ctx.beginPath();
-            ctx.fillStyle = color;
-            ctx.arc(location.x, location.y, size / 2, 0, Math.PI * 2);
-            ctx.fill();
-        }
+    //>  ████████████████████████████████████  GENERAL PROGRAM
 
-        function drawCoordinateSystem(ctx, offset) {
-            ctx.beginPath();
-            ctx.moveTo(-offset.x, 0);
-            ctx.lineTo(ctx.canvas.width - offset.x, 0);
-            ctx.moveTo(0, -offset.y);
-            ctx.lineTo(0, ctx.canvas.height - offset.y);
-            ctx.strokeStyle = 'red';
-            ctx.lineWidth = 1;
-            ctx.stroke();
-        }
-        drawCoordinateSystem(ctx, offset);
+    drawCoordinateSystem(ctx, offset);
 
-
-
-
-        drawPoint(A);
-        drawText("A", A);
-        drawPoint(B);
-        drawText("B", B);
-        drawPoint(C);
-        drawText("C", C);
-
-        function drawText(text, location, color = "white") {
-            ctx.beginPath();
-            ctx.fillStyle = color;
-            ctx.textAlign = "center";
-            ctx.textBaseline = "middle";
-            ctx.font = "bold 50px tall";
-            ctx.fillText(text, location.x, location.y);
-
-
-        }
-
-        //>  ████████████████████████████████████  GENERAL PROGRAM
-
-
-    })
-
-
-
-
-
-    // console.log(document.documentElement);
-
-    //< ████████████████████████████████████  MISC
-
-
+    drawPoint(A);
+    drawText("A", A);
+    drawPoint(B);
+    drawText("B", B);
+    drawPoint(C);
+    drawText("C", C);
 })
+
+
+
+
+
+// console.log(document.documentElement);
+
+//< ████████████████████████████████████  MISC
+
+
+
