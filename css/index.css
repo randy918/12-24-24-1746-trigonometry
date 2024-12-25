@@ -1,0 +1,11 @@
+#canvas__container {
+  width: 1000px;
+  margin: auto;
+}
+
+#canvas {
+  background: #000;
+  border: 10px solid #FFF;
+  width: 80%;
+  height: 800px;
+}/*# sourceMappingURL=index.css.map */
